@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar clientes</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Consultar clientes<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" id="nomeBusca" maxlength="100" type="search" placeholder="Nome"
+                    aria-label="Search">
+                <input class="form-control mr-sm-2" id="cpfBusca" oninput="this.value = mask_cpf(this.value)"
+                    maxlength="14" type="search" placeholder="CPF" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" id="buscar" type="button">Procurar</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="modal fade bd-example-modal-lg" id="modal-mensagem-erro" tabindex="-1" role="dialog" aria-labelledby="modal-mensagem-erro"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-mensagem-erro-body">
+            </div>
+        </div>
+    </div>
+
+    <div class="m-5">
+        <table class="table" id="clientes-consulta">
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Data de Nascimento</th>
+                    <th scope="col">Endereço</th>
+                </tr>
+            </thead>
+            <tbody id="clientes-consulta-body">
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="../js/consulta.js"></script>
+    <script src="../js/modal.js"></script>
+</body>
+
+</html>
