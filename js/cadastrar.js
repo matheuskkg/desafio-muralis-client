@@ -1,4 +1,21 @@
-$("#cadastrar").on("click", function () {
+const clienteObj = JSON.parse(sessionStorage.getItem('cliente'));
+sessionStorage.clear();
+limparInputs();
+
+var update = false;
+
+$(document).ready(function () {
+    if (clienteObj) {
+        $("#nomeCliente").val(clienteObj.nome);
+        $("#cpfCliente").val(clienteObj.cpf);
+        $("#dataNascimentoCliente").val(clienteObj.dataNascimento);
+        $("#enderecoCliente").val(clienteObj.endereco);
+    
+        update = true;
+    }
+});
+
+$(document).on("click", "#salvar", function () {
     limparErros();
 
     const nome = $("#nomeCliente").val();
@@ -33,13 +50,16 @@ $("#cadastrar").on("click", function () {
     cliente.dataNascimento = (dataNascimento == undefined || dataNascimento.trim() == '') ? null : dataNascimento;
     cliente.endereco = (endereco == undefined || endereco.trim() == '') ? null : endereco;
 
+    const url = "http://localhost:8080/cliente" + (update ? "/" + clienteObj.id : '');
+    const method = update ? "PUT" : "POST";
+
     $.ajax({
-        url: "http://localhost:8080/cliente",
-        method: "POST",
+        url: url,
+        method: method,
         contentType: "application/json",
         data: JSON.stringify(cliente),
         success: function () {
-            exibirModal("Cliente cadastrado!");
+            exibirModal("Cliente salvo!");
             limparInputs();
         },
         statusCode: {
@@ -50,7 +70,7 @@ $("#cadastrar").on("click", function () {
                 });
             }
         }
-    })
+    });
 });
 
 function limparInputs() {

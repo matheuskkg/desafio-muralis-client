@@ -36,6 +36,14 @@ function adicionarNaTabela(cliente) {
     row.append(`<td>${cliente.dataNascimento || 'N/A'}</td>`);
     row.append(`<td>${cliente.endereco || 'N/A'}</td>`);
 
+    const botoes = $("<tr>");
+
+    botoes.append(`<button class="btn btn-primary btn-sm my-1 mx-2" onclick="editarCliente(${cliente.id})">Editar</button>`);
+    botoes.append(`<button class="btn btn-danger btn-sm my-1 mx-2" onclick="excluirCliente(${cliente.id})">Excluir</button>`);
+    botoes.append(`<button class="btn btn-info btn-sm my-1 mx-2" onclick="contatosCliente(${cliente.id})">Contatos</button>`);
+
+    row.append(botoes);
+
     tableBody.append(row);
 }
 
@@ -54,9 +62,18 @@ $.ajax({
         if (Array.isArray(response)) {
             limparTabela();
 
+            sessionStorage.setItem("clientes", JSON.stringify(response));
             response.forEach(cliente => {
                 adicionarNaTabela(cliente);
             });
         }
     }
-})
+});
+
+function editarCliente(id) {
+    const clientes = JSON.parse(sessionStorage.getItem("clientes"));
+    const cliente = clientes.find(cliente => id === cliente.id);
+
+    sessionStorage.setItem("cliente", JSON.stringify(cliente));
+    window.location.assign("cadastrar-clientes.html");
+}
