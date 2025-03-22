@@ -1,8 +1,8 @@
 const clienteObj = JSON.parse(sessionStorage.getItem('cliente'));
+const operacao = sessionStorage.getItem("operacao");
+
 sessionStorage.clear();
 limparInputs();
-
-var update = false;
 
 $(document).ready(function () {
     if (clienteObj) {
@@ -10,12 +10,30 @@ $(document).ready(function () {
         $("#cpfCliente").val(clienteObj.cpf);
         $("#dataNascimentoCliente").val(clienteObj.dataNascimento);
         $("#enderecoCliente").val(clienteObj.endereco);
-    
-        update = true;
+    }
+
+    if (operacao === "excluir") {
+        $("#salvar").removeClass("btn-primary").addClass("btn-danger").text("Excluir");
+        $("input").prop("disabled", true)
     }
 });
 
 $(document).on("click", "#salvar", function () {
+    if (operacao === "excluir") {
+        $.ajax({
+            url: "http://localhost:8080/cliente/" + clienteObj.id,
+            method: "DELETE",
+            success: function () {
+                exibirModal("Cliente excluido!");
+                limparInputs();
+            }
+        });
+    }
+
+    $(".modal").on("hidden.bs.modal", function () {
+        window.location = "consultar-clientes.html";
+    });
+
     limparErros();
 
     const nome = $("#nomeCliente").val();
@@ -50,8 +68,15 @@ $(document).on("click", "#salvar", function () {
     cliente.dataNascimento = (dataNascimento == undefined || dataNascimento.trim() == '') ? null : dataNascimento;
     cliente.endereco = (endereco == undefined || endereco.trim() == '') ? null : endereco;
 
-    const url = "http://localhost:8080/cliente" + (update ? "/" + clienteObj.id : '');
-    const method = update ? "PUT" : "POST";
+    var url;
+    var method;
+    if (operacao === "criar") {
+        url = "http://localhost:8080/cliente";
+        method = "POST";
+    } else if (operacao === "atualizar") {
+        url = "http://localhost:8080/cliente/" + clienteObj.id;
+        method = "PUT";
+    }
 
     $.ajax({
         url: url,

@@ -70,10 +70,24 @@ $.ajax({
     }
 });
 
+$("#cadastrar-cliente").on("click", function () {
+    sessionStorage.setItem("operacao", "criar");
+});
+
 function editarCliente(id) {
     const clientes = JSON.parse(sessionStorage.getItem("clientes"));
     const cliente = clientes.find(cliente => id === cliente.id);
 
+    sessionStorage.setItem("operacao", "atualizar");
+    sessionStorage.setItem("cliente", JSON.stringify(cliente));
+    window.location.assign("cadastrar-clientes.html");
+}
+
+function excluirCliente(id) {
+    const clientes = JSON.parse(sessionStorage.getItem("clientes"));
+    const cliente = clientes.find(cliente => id === cliente.id);
+
+    sessionStorage.setItem("operacao", "excluir");
     sessionStorage.setItem("cliente", JSON.stringify(cliente));
     window.location.assign("cadastrar-clientes.html");
 }
