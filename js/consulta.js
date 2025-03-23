@@ -1,3 +1,5 @@
+sessionStorage.clear();
+
 function buscarPorNomeCpf() {
     const nome = $("#nomeBusca").val();
     const cpf = $("#cpfBusca").val();
@@ -90,4 +92,12 @@ function excluirCliente(id) {
     sessionStorage.setItem("operacao", "excluir");
     sessionStorage.setItem("cliente", JSON.stringify(cliente));
     window.location.assign("cadastrar-clientes.html");
+}
+
+function contatosCliente(id) {
+    const clientes = JSON.parse(sessionStorage.getItem("clientes"));
+    const cliente = clientes.find(cliente => id === cliente.id);
+
+    sessionStorage.setItem("cliente", JSON.stringify(cliente));
+    window.location.assign("consultar-contatos.html");
 }

@@ -104,15 +104,3 @@ function limparInputs() {
     $("#dataNascimentoCliente").val('');
     $("#enderecoCliente").val('');
 }
-
-function limparErros() {
-    $("#validacao-erro").empty();
-}
-
-function exibirErro(mensagem) {
-    p = document.createElement('p');
-    p.innerHTML = mensagem;
-
-    $(p).css('color', 'red');
-    $("#validacao-erro").append(p);
-}
