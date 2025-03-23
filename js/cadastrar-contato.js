@@ -4,6 +4,34 @@ function preencherInputsContato(contato) {
     $("#observacao").val(contato.observacao);
 }
 
+function validarInputsContato(tipo, valor) {
+    if (valor.trim() === '') {
+        exibirErro("Deve ser inserido o e-mail/telefone.");
+
+        return false;
+    }
+
+    if (tipo === 'e-mail') {
+        const regex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+        
+        if (!regex.test(valor)) {
+            exibirErro("E-mail inválido.");
+            return false;
+        }
+    }
+
+    if (tipo === 'telefone') {
+        const regex = new RegExp("^\d+$");
+
+        if (!regex.test(valor)) {
+            exibirErro("Telefone inválido.");
+            return false;
+        }
+    }
+
+    return true;
+}
+
 $("#modal-mensagem-erro").on("hidden.bs.modal", function () {
     window.location.replace("consultar-contatos.html");
 });
@@ -55,12 +83,15 @@ $("#salvar").on("click", function (e) {
         });
     }
 
-    e.preventDefault();
     limparErros();
 
     const tipoContato = $("input[type='radio'][name='tipoContato']:checked").val();
     const contatoValor = $("#contato").val();
     const observacao = $("#observacao").val();
+
+    if (!validarInputsContato(tipoContato, contatoValor)) {
+        return;
+    }
 
     const contato = {};
     contato.cliente = cliente;
