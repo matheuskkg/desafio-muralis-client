@@ -70,17 +70,6 @@ $(document).ready(function () {
 });
 
 $("#salvar").on("click", function (e) {
-    if (operacao === "excluir") {
-        $.ajax({
-            url: url,
-            method: method,
-            success: function () {
-                exibirModal("Contato excluido!");
-                return;
-            }
-        });
-    }
-
     limparErros();
 
     const tipoContato = $("input[type='radio'][name='tipoContato']:checked").val();

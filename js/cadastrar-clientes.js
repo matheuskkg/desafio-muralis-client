@@ -60,17 +60,6 @@ $(document).ready(function () {
 });
 
 $(document).on("click", "#salvar", function () {
-    if (operacao === "excluir") {
-        $.ajax({
-            url: url,
-            method: method,
-            success: function () {
-                exibirModal("Cliente excluido!");
-                return;
-            }
-        });
-    }
-
     limparErros();
 
     const nome = $("#nomeCliente").val();
