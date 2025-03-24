@@ -1,53 +1,12 @@
-function limparInputs() {
-    $("#nomeCliente").val('');
-    $("#cpfCliente").val('');
-    $("#dataNascimentoCliente").val('');
-    $("#enderecoCliente").val('');
+function preencherInputsCliente(cliente) {
+    $("#nomeCliente").val(cliente.nome);
+        $("#cpfCliente").val(cliente.cpf);
+        $("#dataNascimentoCliente").val(cliente.dataNascimento);
+        $("#enderecoCliente").val(cliente.endereco);
 }
 
-const clienteObj = JSON.parse(sessionStorage.getItem('cliente'));
-const operacao = sessionStorage.getItem("operacao");
-
-sessionStorage.clear();
-limparInputs();
-
-$(document).ready(function () {
-    if (clienteObj) {
-        $("#nomeCliente").val(clienteObj.nome);
-        $("#cpfCliente").val(clienteObj.cpf);
-        $("#dataNascimentoCliente").val(clienteObj.dataNascimento);
-        $("#enderecoCliente").val(clienteObj.endereco);
-    }
-
-    if (operacao === "excluir") {
-        $("#salvar").removeClass("btn-primary").addClass("btn-danger").text("Excluir");
-        $("input").prop("disabled", true)
-    }
-});
-
-$(document).on("click", "#salvar", function () {
-    if (operacao === "excluir") {
-        $.ajax({
-            url: "http://localhost:8080/cliente/" + clienteObj.id,
-            method: "DELETE",
-            success: function () {
-                exibirModal("Cliente excluido!");
-            }
-        });
-    }
-
-    $(".modal").on("hidden.bs.modal", function () {
-        window.location = "consultar-clientes.html";
-    });
-
-    limparErros();
-
-    const nome = $("#nomeCliente").val();
-    const cpf = $("#cpfCliente").val();
-    const dataNascimento = $("#dataNascimentoCliente").val();
-    const endereco = $("#enderecoCliente").val();
-
-    var erros = 0;
+function validarInputsCliente(nome, cpf) {
+    let erros = 0;
 
     if (nome.trim() == '') {
         exibirErro('O nome do cliente não pode estar vazio.');
@@ -64,7 +23,62 @@ $(document).on("click", "#salvar", function () {
         erros++;
     }
 
-    if (erros) {
+    return !erros > 0;
+}
+
+const operacao = sessionStorage.getItem("operacao");
+let url = "http://localhost:8080/cliente";
+let method;
+
+$(document).ready(function () {
+    if (operacao === "criar") {
+        method = "POST";
+
+        $("#salvar").addClass("btn btn-primary").text("Cadastrar");
+    } 
+    
+    if (operacao === "atualizar") {
+        const clienteEditar = JSON.parse(sessionStorage.getItem('cliente'));
+        preencherInputsCliente(clienteEditar);
+
+        url += "/" + clienteEditar.id;
+        method = "PUT";
+
+        $("#salvar").addClass("btn btn-primary").text("Editar");
+    }
+
+    if (operacao === "excluir") {
+        const clienteExcluir = JSON.parse(sessionStorage.getItem('cliente'));
+        preencherInputsCliente(clienteExcluir);
+
+        url += "/" + clienteExcluir.id;
+        method = "DELETE";
+
+        $("#salvar").addClass("btn btn-danger").text("Excluir");
+        $("input").prop("disabled", true)
+    }
+});
+
+$(document).on("click", "#salvar", function () {
+    if (operacao === "excluir") {
+        $.ajax({
+            url: url,
+            method: method,
+            success: function () {
+                exibirModal("Cliente excluido!");
+                return;
+            }
+        });
+    }
+
+    limparErros();
+
+    const nome = $("#nomeCliente").val();
+    const cpf = $("#cpfCliente").val();
+    const dataNascimento = $("#dataNascimentoCliente").val();
+    const endereco = $("#enderecoCliente").val();
+
+    if (!validarInputsCliente(nome, cpf)) {
         return;
     }
 
@@ -74,16 +88,6 @@ $(document).on("click", "#salvar", function () {
     cliente.dataNascimento = (dataNascimento == undefined || dataNascimento.trim() == '') ? null : dataNascimento;
     cliente.endereco = (endereco == undefined || endereco.trim() == '') ? null : endereco;
 
-    var url;
-    var method;
-    if (operacao === "criar") {
-        url = "http://localhost:8080/cliente";
-        method = "POST";
-    } else if (operacao === "atualizar") {
-        url = "http://localhost:8080/cliente/" + clienteObj.id;
-        method = "PUT";
-    }
-
     $.ajax({
         url: url,
         method: method,
@@ -91,7 +95,6 @@ $(document).on("click", "#salvar", function () {
         data: JSON.stringify(cliente),
         success: function () {
             exibirModal("Cliente salvo!");
-            limparInputs();
         },
         statusCode: {
             400: function (response) {
@@ -102,4 +105,8 @@ $(document).on("click", "#salvar", function () {
             }
         }
     });
+});
+
+$(".modal").on("hidden.bs.modal", function () {
+    window.location = "consultar-clientes.html";
 });
