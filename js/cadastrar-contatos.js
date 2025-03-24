@@ -32,10 +32,6 @@ function validarInputsContato(tipo, valor) {
     return true;
 }
 
-$("#modal-mensagem-erro").on("hidden.bs.modal", function () {
-    window.location.replace("consultar-contatos.html");
-});
-
 const cliente = JSON.parse(sessionStorage.getItem("cliente"));
 
 $("#nomeCliente").val(cliente.nome);
@@ -49,6 +45,7 @@ const operacao = sessionStorage.getItem("operacao");
 $(document).ready(function () {
     if (operacao === "criar") {
         method = "POST";
+        $("#salvar").addClass("btn btn-primary").text("Cadastrar");
     }
 
     if (operacao === "editar") {
@@ -57,6 +54,7 @@ $(document).ready(function () {
 
         url += "/" + contatoEditar.id;
         method = "PUT";
+        $("#salvar").addClass("btn btn-primary").text("Editar");
     }
 
     if (operacao === "excluir") {
@@ -66,7 +64,7 @@ $(document).ready(function () {
         url += "/" + contatoExcluir.id;
         method = "DELETE";
 
-        $("#salvar").removeClass("btn-primary").addClass("btn-danger").text("Excluir");
+        $("#salvar").addClass("btn btn-danger").text("Excluir");
         $("input").prop("disabled", true);
     }
 });
@@ -111,7 +109,6 @@ $("#salvar").on("click", function (e) {
             400: function (response) {
                 response = response.responseJSON;
                 response.erros.forEach(erro => {
-                    console.log(response.erros);
                     exibirErro(erro);
                 });
             }

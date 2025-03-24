@@ -10,22 +10,20 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Consultar clientes<span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-            <a href="cadastrar-clientes.html"><button class="btn btn-outline-success my-2 my-sm-0 mx-sm-2" id="cadastrar-cliente" type="button">Cadastrar Cliente</button></a>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" id="nomeBusca" maxlength="100" type="search" placeholder="Nome"
-                    aria-label="Search">
-                <input class="form-control mr-sm-2" id="cpfBusca" oninput="this.value = mask_cpf(this.value)"
-                    maxlength="14" type="search" placeholder="CPF" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" id="buscar" type="submit">Procurar</button>
-            </form>
-        </div>
+    <nav class="navbar navbar-light bg-light">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Consultar clientes<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <a href="cadastrar-clientes.html"><button class="btn btn-outline-success my-2 my-sm-0 mx-sm-2" id="cadastrar-cliente" type="button">Cadastrar Cliente</button></a>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" id="nomeBusca" maxlength="100" type="search" placeholder="Nome"
+                aria-label="Search">
+            <input class="form-control mr-sm-2" id="cpfBusca" oninput="this.value = mask_cpf(this.value)"
+                maxlength="14" type="search" placeholder="CPF" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" id="buscar" type="submit">Procurar</button>
+        </form>
     </nav>
 
     <div class="modal fade bd-example-modal-lg" id="modal-mensagem-erro" tabindex="-1" role="dialog" aria-labelledby="modal-mensagem-erro"
@@ -37,14 +35,14 @@
     </div>
 
     <div>
-        <table class="table table-striped text-center align-middle" id="clientes-consulta">
+        <table class="table table-striped table-fixed text-center align-middle" id="clientes-consulta">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Data de Nascimento</th>
-                    <th scope="col">Endereço</th>
-                    <th scope="col">Ações</th>
+                    <th scope="col" class="col-3">Nome</th>
+                    <th scope="col" class="col-2">CPF</th>
+                    <th scope="col" class="col-2">Data de Nascimento</th>
+                    <th scope="col" class="col-3">Endereço</th>
+                    <th scope="col" class="col-2">Ações</th>
                 </tr>
             </thead>
             <tbody id="clientes-consulta-body">

@@ -7,10 +7,14 @@ function adicionarNaTabela(contato) {
     row.append(`<td>${contato.valor}</td>`);
     row.append(`<td>${contato.observacao || 'N/A'}</td>`);
 
-    const botoes = $("<tr>");
-
-    botoes.append(`<button class="btn btn-primary btn-sm my-1 mx-2 editar-contato" data-id="${contato.id}">Editar</button>`);
-    botoes.append(`<button class="btn btn-danger btn-sm my-1 mx-2 excluir-contato" data-id="${contato.id}">Excluir</button>`);
+    const botoes = $(`
+        <td>
+            <div class="d-flex flex-row justify-content-center">
+                <button class="btn btn-primary btn-sm mx-1 editar-contato" data-id="${contato.id}">Editar</button>
+                <button class="btn btn-danger btn-sm mx-1 excluir-contato" data-id="${contato.id}">Excluir</button>
+            </div>
+        </td>
+    `);
 
     row.append(botoes);
 

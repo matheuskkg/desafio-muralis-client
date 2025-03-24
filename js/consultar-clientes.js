@@ -1,5 +1,3 @@
-sessionStorage.clear();
-
 function buscarPorNomeCpf() {
     const nome = $("#nomeBusca").val();
     const cpf = $("#cpfBusca").val();
@@ -44,11 +42,15 @@ function adicionarNaTabela(cliente) {
     row.append(`<td>${cliente.dataNascimento || 'N/A'}</td>`);
     row.append(`<td>${cliente.endereco || 'N/A'}</td>`);
 
-    const botoes = $("<tr>");
-
-    botoes.append(`<button class="btn btn-primary btn-sm my-1 mx-2 editar-cliente" data-id="${cliente.id}">Editar</button>`);
-    botoes.append(`<button class="btn btn-danger btn-sm my-1 mx-2 excluir-cliente" data-id="${cliente.id}">Excluir</button>`);
-    botoes.append(`<button class="btn btn-info btn-sm my-1 mx-2 contatos-cliente" data-id="${cliente.id}">Contatos</button>`);
+    const botoes = $(`
+        <td>
+            <div class="d-flex flex-row justify-content-center">
+                <button class="btn btn-primary btn-sm mx-1 editar-cliente" data-id="${cliente.id}">Editar</button>
+                <button class="btn btn-danger btn-sm mx-1 excluir-cliente" data-id="${cliente.id}">Excluir</button>
+                <button class="btn btn-info btn-sm mx-1 contatos-cliente" data-id="${cliente.id}">Contatos</button>
+            </div>
+        </td>
+    `);
 
     row.append(botoes);
 

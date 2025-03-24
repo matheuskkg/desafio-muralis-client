@@ -10,14 +10,12 @@
 </head>
 
 <body style="overflow-x: hidden;">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="consultar-clientes.html">Consultar clientes</a>
-                </li>
-            </ul>
-        </div>
+    <nav class="navbar navbar-light bg-light">
+        <ul class="navbar-nav d-flex flex-row">
+            <li class="nav-item">
+                <a class="nav-link" href="consultar-clientes.html">Consultar clientes</a>
+            </li>
+        </ul>
     </nav>
 
     <div class="modal fade bd-example-modal-lg" id="modal-mensagem-erro" tabindex="-1" role="dialog"
@@ -28,22 +26,24 @@
         </div>
     </div>
 
-    <div class="form-row justify-content-around d-flex mt-4">
-        <div class="col-md-2 mb-2 text-center">
-            <label>Nome</label>
-            <input type="text" class="form-control" id="nomeCliente" value="" disabled="true">
-        </div>
-        <div class="col-md-2 mb-2 text-center">
-            <label>CPF</label>
-            <input type="text" class="form-control" id="cpfCliente" value="" disabled="true">
-        </div>
-        <div class="col-md-2 mb-2 text-center">
-            <label>Data de Nascimento</label>
-            <input type="text" class="form-control" id="dataNascimentoCliente" value="" disabled="true">
-        </div>
-        <div class="col-md-2 mb-2 text-center">
-            <label>Endereço</label>
-            <input type="text" class="form-control" id="enderecoCliente" value="" disabled="true">
+    <div class="container p-0">
+        <div class="row g-0">
+            <div class="col-3 mb-2 text-center">
+                <label>Nome</label>
+                <input type="text" class="form-control" id="nomeCliente" value="" disabled="true">
+            </div>
+            <div class="col-3 mb-2 text-center">
+                <label>CPF</label>
+                <input type="text" class="form-control" id="cpfCliente" value="" disabled="true">
+            </div>
+            <div class="col-3 mb-2 text-center">
+                <label>Data de Nascimento</label>
+                <input type="text" class="form-control" id="dataNascimentoCliente" value="" disabled="true">
+            </div>
+            <div class="col-3 mb-2 text-center">
+                <label>Endereço</label>
+                <input type="text" class="form-control" id="enderecoCliente" value="" disabled="true">
+            </div>
         </div>
     </div>
     
@@ -70,7 +70,7 @@
                     <div class="form-group form-check">
                         <small class="form-text text-muted">* representa campos obrigatórios.</small>
                     </div>
-                    <button type="submit" id="salvar" class="btn btn-primary">Cadastrar</button>
+                    <button type="submit" id="salvar"></button>
                 </form>
                 <div class="my-2" style="min-height: 100px;">
                     <small class="form-text text-muted" id="validacao-erro"></small>
