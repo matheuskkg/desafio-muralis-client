@@ -1,3 +1,10 @@
+function limparInputs() {
+    $("#nomeCliente").val('');
+    $("#cpfCliente").val('');
+    $("#dataNascimentoCliente").val('');
+    $("#enderecoCliente").val('');
+}
+
 const clienteObj = JSON.parse(sessionStorage.getItem('cliente'));
 const operacao = sessionStorage.getItem("operacao");
 
@@ -25,7 +32,6 @@ $(document).on("click", "#salvar", function () {
             method: "DELETE",
             success: function () {
                 exibirModal("Cliente excluido!");
-                limparInputs();
             }
         });
     }
@@ -97,10 +103,3 @@ $(document).on("click", "#salvar", function () {
         }
     });
 });
-
-function limparInputs() {
-    $("#nomeCliente").val('');
-    $("#cpfCliente").val('');
-    $("#dataNascimentoCliente").val('');
-    $("#enderecoCliente").val('');
-}

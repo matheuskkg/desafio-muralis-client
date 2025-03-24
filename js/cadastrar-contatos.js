@@ -21,7 +21,7 @@ function validarInputsContato(tipo, valor) {
     }
 
     if (tipo === 'telefone') {
-        const regex = new RegExp("^\d+$");
+        const regex = new RegExp(/^\d+$/);
 
         if (!regex.test(valor)) {
             exibirErro("Telefone inválido.");
@@ -117,4 +117,8 @@ $("#salvar").on("click", function (e) {
             }
         }
     });
+});
+
+$(".modal").on("hidden.bs.modal", function () {
+    window.location = "consultar-contatos.html";
 });

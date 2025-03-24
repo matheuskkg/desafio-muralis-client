@@ -28,6 +28,12 @@ function buscarPorNomeCpf() {
     });
 }
 
+// Procura um cliente pelo id, os clientes devem estar armazenados na sessionStorage
+function buscarPorId(id) {
+    const clientes = JSON.parse(sessionStorage.getItem("clientes"));
+    return clientes.find(cliente => id === cliente.id);
+}
+
 function adicionarNaTabela(cliente) {
     const tableBody = $("#clientes-consulta tbody");
 
@@ -40,9 +46,9 @@ function adicionarNaTabela(cliente) {
 
     const botoes = $("<tr>");
 
-    botoes.append(`<button class="btn btn-primary btn-sm my-1 mx-2" onclick="editarCliente(${cliente.id})">Editar</button>`);
-    botoes.append(`<button class="btn btn-danger btn-sm my-1 mx-2" onclick="excluirCliente(${cliente.id})">Excluir</button>`);
-    botoes.append(`<button class="btn btn-info btn-sm my-1 mx-2" onclick="contatosCliente(${cliente.id})">Contatos</button>`);
+    botoes.append(`<button class="btn btn-primary btn-sm my-1 mx-2 editar-cliente" data-id="${cliente.id}">Editar</button>`);
+    botoes.append(`<button class="btn btn-danger btn-sm my-1 mx-2 excluir-cliente" data-id="${cliente.id}">Excluir</button>`);
+    botoes.append(`<button class="btn btn-info btn-sm my-1 mx-2 contatos-cliente" data-id="${cliente.id}">Contatos</button>`);
 
     row.append(botoes);
 
@@ -52,11 +58,7 @@ function adicionarNaTabela(cliente) {
 function limparTabela() {
     $("#clientes-consulta tbody").empty();
 }
-
-$("#buscar").on("click", function() {
-    buscarPorNomeCpf();
-});
-
+// Query inicial para carregar a tabela
 $.ajax({
     url: "http://localhost:8080/cliente",
     method: "GET",
@@ -72,32 +74,27 @@ $.ajax({
     }
 });
 
+$("#buscar").on("click", function() {
+    buscarPorNomeCpf();
+});
+
 $("#cadastrar-cliente").on("click", function () {
     sessionStorage.setItem("operacao", "criar");
 });
 
-function editarCliente(id) {
-    const clientes = JSON.parse(sessionStorage.getItem("clientes"));
-    const cliente = clientes.find(cliente => id === cliente.id);
-
+$(document).on("click", ".editar-cliente", function () {
     sessionStorage.setItem("operacao", "atualizar");
-    sessionStorage.setItem("cliente", JSON.stringify(cliente));
+    sessionStorage.setItem("cliente", JSON.stringify(buscarPorId($(this).data("id"))));
     window.location.assign("cadastrar-clientes.html");
-}
+});
 
-function excluirCliente(id) {
-    const clientes = JSON.parse(sessionStorage.getItem("clientes"));
-    const cliente = clientes.find(cliente => id === cliente.id);
-
+$(document).on("click", ".excluir-cliente", function () {
     sessionStorage.setItem("operacao", "excluir");
-    sessionStorage.setItem("cliente", JSON.stringify(cliente));
+    sessionStorage.setItem("cliente", JSON.stringify(buscarPorId($(this).data("id"))));
     window.location.assign("cadastrar-clientes.html");
-}
+});
 
-function contatosCliente(id) {
-    const clientes = JSON.parse(sessionStorage.getItem("clientes"));
-    const cliente = clientes.find(cliente => id === cliente.id);
-
-    sessionStorage.setItem("cliente", JSON.stringify(cliente));
+$(document).on("click", ".contatos-cliente", function () {
+    sessionStorage.setItem("cliente", JSON.stringify(buscarPorId($(this).data("id"))));
     window.location.assign("consultar-contatos.html");
-}
+});
