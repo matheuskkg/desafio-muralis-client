@@ -1,5 +1,5 @@
 function preencherInputsContato(contato) {
-    $("input[type='radio'][name='tipoContato'][value='" + contato.tipo.tipo + "']").prop("checked", true);
+    $("input[type='radio'][name='tipoContato'][value='" + contato.tipo + "']").prop("checked", true);
     $("#contato").val(contato.valor);
     $("#observacao").val(contato.observacao);
 }
